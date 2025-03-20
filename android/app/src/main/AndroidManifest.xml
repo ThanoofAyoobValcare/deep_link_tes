@@ -40,9 +40,10 @@
     <!-- Allow querying for the second app -->
     <queries>
         <package android:name="com.geojit.myg" />
-        <intent>
-            <action android:name="android.intent.action.PROCESS_TEXT"/>
-            <data android:mimeType="text/plain"/>
-        </intent>
+        <intent-filter>
+    <action android:name="android.intent.action.SEND" />
+    <category android:name="android.intent.category.DEFAULT"/>
+   <data android:mimeType="text/plain" />
+    </intent-filter>
     </queries>
 </manifest>

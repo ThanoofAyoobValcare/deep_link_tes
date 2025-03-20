@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:deep_link_test/intent.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -106,12 +108,31 @@ class _TextFieldPageState extends State<TextFieldPage> {
               onPressed: _copyText,
               child: Text("Launch apps using custom  scheme"),
             ),
-            ElevatedButton(
-                onPressed: () {
-                  launchSecondApp(
-                      _controller1.text, _controller2.text, context);
-                },
-                child: Text("Launch app using intent in Android")),
+            Platform.isAndroid
+                ? ElevatedButton(
+                    onPressed: () {
+                      launchSecondApp(
+                          _controller1.text, _controller2.text, context);
+                    },
+                    child: Text("Launch app using intent in Android"))
+                : ElevatedButton(
+                    onPressed: () async {
+                      final uri = Uri(
+                        scheme: "com.geojit.myg",
+                        queryParameters: {
+                          'token': _controller1.text,
+                          'pageName': _controller2.text,
+                          'userId': _controller3.text,
+                          'misc1': "",
+                          'misc2': "",
+                        },
+                      );
+
+                      await launchUrl(uri,
+                          mode: LaunchMode.externalApplication);
+                    },
+                    child: Text("iOS scheme"),
+                  ),
           ],
         ),
       ),
