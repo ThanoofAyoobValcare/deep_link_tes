@@ -70,7 +70,15 @@ class _TextFieldPageState extends State<TextFieldPage> {
   Future<void> _ssslaunchUrl(
     Uri uri,
   ) async {}
+  String selectedEnv = "uat"; // Default selection
+  String packageName = "com.geojit.myg_uat"; // Default package
 
+  void updatePackage(String env) {
+    setState(() {
+      selectedEnv = env;
+      packageName = env == "uat" ? "com.geojit.myg_uat" : "com.geojit.myg";
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,6 +112,19 @@ class _TextFieldPageState extends State<TextFieldPage> {
                 border: OutlineInputBorder(),
               ),
             ),
+            DropdownButton<String>(
+              value: selectedEnv,
+              onChanged: (String? newValue) {
+                if (newValue != null) {
+                  updatePackage(newValue);
+                }
+              },
+              items: [
+                DropdownMenuItem(value: "uat", child: Text("UAT")),
+                DropdownMenuItem(
+                    value: "production", child: Text("Production")),
+              ],
+            ),
             ElevatedButton(
               onPressed: _copyText,
               child: Text("Launch apps using custom  scheme"),
@@ -112,7 +133,7 @@ class _TextFieldPageState extends State<TextFieldPage> {
                 ? ElevatedButton(
                     onPressed: () {
                       launchSecondApp(
-                          _controller1.text, _controller2.text, context);
+                          _controller1.text, _controller2.text, context,packageName);
                     },
                     child: Text("Launch app using intent in Android"))
                 : ElevatedButton(

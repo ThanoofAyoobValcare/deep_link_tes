@@ -3,6 +3,7 @@
         android:label="deep_link_test"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -40,10 +41,5 @@
     <!-- Allow querying for the second app -->
     <queries>
         <package android:name="com.geojit.myg" />
-        <intent-filter>
-    <action android:name="android.intent.action.SEND" />
-    <category android:name="android.intent.category.DEFAULT"/>
-   <data android:mimeType="text/plain" />
-    </intent-filter>
-    </queries>
+    </queries> 
 </manifest>
